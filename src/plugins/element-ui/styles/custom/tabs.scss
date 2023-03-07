@@ -1,0 +1,33 @@
+.el-tabs--card > .el-tabs__header .el-tabs__nav {
+    border: none;
+}
+.el-tabs__nav {
+    display: flex;
+    .el-tabs__item {
+        border: none !important;
+        margin: 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            color: rgb(52, 71, 103);
+        }
+    }
+}
+
+.el-tabs__item.is-active {
+    border-radius: 1rem;
+    color: rgb(52, 71, 103) !important;
+    outline: 3px solid rgba(52, 71, 103, 0.02) !important;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+.el-tabs--card > .el-tabs__header {
+    border: none;
+}
+
+.el-tabs__nav-scroll {
+    padding: 5px 0;
+}

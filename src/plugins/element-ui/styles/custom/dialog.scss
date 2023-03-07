@@ -1,0 +1,18 @@
+.el-overlay-dialog {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    .el-dialog {
+        margin-top: 5vh;
+        border-radius: 12px;
+        .el-dialog__body {
+            max-height: calc(100vh - 5vh - 150px);
+            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .el-dialog__footer {
+            max-height: 72px;
+        }
+    }
+}

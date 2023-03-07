@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+@import 'variables';
+
+body {
+    font-family: 'Open Sans';
+    margin: 0;
+    .green-mode-theme {
+        --el-color-primary: #82d616;
+    }
+    .blue-mode-theme {
+        --el-color-primary: #409eff;
+    }
+}
+
+.el-drawer__header {
+    margin-bottom: 0px;
+}
+.validation-error {
+    word-break: break-word;
+    margin-top: 5px;
+    line-height: 1;
+    font-size: 12px;
+    color: #dc3545;
+}
+.form-group {
+    margin-bottom: 30px;
+}
+.modal-drawer .el-drawer__close-btn {
+    display: flex !important;
+}

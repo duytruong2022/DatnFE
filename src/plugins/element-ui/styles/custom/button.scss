@@ -1,0 +1,146 @@
+@import '../../../../assets/styles/variables';
+
+.el-button {
+    border-color: $--border-color-base !important;
+
+    &:hover {
+        background-color: $--color-white !important;
+        border-color: $--border-color-base !important;
+        color: $--color-text-regular !important;
+    }
+
+    &:focus {
+        background-color: $--color-white !important;
+        border-color: $--border-color-base !important;
+        color: $--color-text-regular !important;
+    }
+
+    &:focus-visible {
+        outline: unset;
+    }
+
+    &--default {
+        background-color: $--color-white !important;
+        border-color: $--border-color-base !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: $--color-text-regular !important;
+            background: $--color-white !important;
+            border-color: $--border-color-base !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: $--color-white !important;
+            border-color: $--border-color-base !important;
+            color: $--color-text-regular !important;
+        }
+
+        &:hover,
+        &.is-plain:hover {
+            border-color: $--color-primary !important;
+        }
+    }
+    &--success {
+        background-color: $--color-success !important;
+        border-color: $--color-success !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: $--color-success !important;
+            background: $--color-white !important;
+            border-color: $--color-success !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: $--color-success !important;
+            border-color: $--color-success !important;
+            color: $--color-white !important;
+        }
+    }
+    &--warning {
+        background-color: $--color-warning !important;
+        border-color: $--color-warning !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: $--color-warning !important;
+            background: $--color-white !important;
+            border-color: $--color-warning !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: $--color-warning !important;
+            border-color: $--color-warning !important;
+            color: $--color-white !important;
+        }
+    }
+    &--danger,
+    &--error {
+        background-color: $--color-danger !important;
+        border-color: $--color-danger !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: $--color-danger !important;
+            background: $--color-white !important;
+            border-color: $--color-danger !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: $--color-danger !important;
+            border-color: $--color-danger !important;
+            color: $--color-white !important;
+        }
+    }
+    &--primary {
+        background-color: var(--el-color-primary) !important;
+        border-color: var(--el-color-primary) !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: var(--el-color-primary) !important;
+            background: var(--el-color-primary) !important;
+            border-color: var(--el-color-primary) !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: var(--el-color-primary) !important;
+            border-color: var(--el-color-primary) !important;
+            color: $--color-white !important;
+            opacity: $--opacity-hover-button !important;
+        }
+    }
+    &--info {
+        background-color: $--color-info !important;
+        border-color: $--color-info !important;
+        &.is-plain,
+        &.is-plain:focus {
+            color: $--color-info !important;
+            background: $--color-white !important;
+            border-color: $--color-info !important;
+        }
+        &:hover,
+        &:focus,
+        &.is-plain:hover {
+            background-color: $--color-info !important;
+            border-color: $--color-info !important;
+            color: $--color-white !important;
+        }
+    }
+}
+
+.el-picker-panel__footer {
+    .el-button {
+        padding: 10px !important;
+    }
+}
+
+.el-button.is-text {
+    background-color: #fff !important;
+    border: 1px solid #dcdfe6 !important;
+    &:hover {
+        color: #409eff !important;
+        border-color: #409eff !important;
+    }
+}

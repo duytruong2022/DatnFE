@@ -1,0 +1,22 @@
+.el-select-dropdown__wrap {
+    padding: 16px 8px;
+    .el-select-dropdown__list {
+        margin: 0px;
+        .el-select-dropdown__item {
+            color: rgb(103, 116, 142);
+        }
+        .hover {
+            background: #e9ecef;
+            color: #344767;
+            border-radius: 8px;
+            font-weight: 400;
+            .text-right-options {
+                display: block;
+            }
+        }
+        .selected {
+            color: #344767;
+            font-weight: 400;
+        }
+    }
+}

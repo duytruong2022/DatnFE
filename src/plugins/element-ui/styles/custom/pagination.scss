@@ -1,0 +1,61 @@
+.el-pagination {
+    right: 0px;
+    text-align: right;
+    padding-right: 0px;
+    .el-input {
+        margin-left: 0px;
+        width: 100% !important;
+    }
+    .btn-prev,
+    .btn-next {
+        border: 1px solid #ededed;
+        margin: 0 !important;
+    }
+    .btn-next {
+        border: 1px solid #ededed;
+        border-radius: 50%;
+        margin: 2px !important;
+        padding: 0 !important;
+    }
+    .btn-prev {
+        border: 1px solid #ededed;
+        border-radius: 50%;
+        margin: 2px !important;
+        padding: 0 !important;
+    }
+    .el-input__inner {
+        height: 32px !important;
+    }
+}
+.el-pagination__sizes > .el-select {
+    width: 138px !important;
+}
+.el-pager {
+    .number,
+    .more {
+        border: 1px solid #ededed;
+        border-radius: 50%;
+        margin: 2px !important;
+        padding: 0 !important;
+    }
+    .number {
+        &.active {
+            background-color: rgb(33, 82, 255);
+            color: #ffffff;
+        }
+    }
+    .is-active {
+        line-height: 1.4;
+        text-align: center;
+        text-transform: uppercase;
+        user-select: none;
+        transition: all 150ms ease-in 0s;
+        box-shadow: rgb(0 0 0 / 11%) 0rem 0.25rem 0.4375rem -0.0625rem,
+            rgb(0 0 0 / 7%) 0rem 0.125rem 0.25rem -0.0625rem;
+        background-image: linear-gradient(310deg, rgb(33, 82, 255), rgb(33, 212, 253));
+        color: #ffffff !important;
+    }
+}
+.el-select__caret {
+    transform: rotateZ(-180deg) !important;
+}
