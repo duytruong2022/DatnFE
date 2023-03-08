@@ -17,9 +17,7 @@ const projectLogRouters: Array<RouteRecordRaw> = [
                 name: PageName.PROJECT_LOG_HISTORY_LIST_PAGE,
                 component: ProjectLogHistoryListPage,
                 meta: {
-                    requiredPermissions: [
-                        SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-                    ],
+                    requiredPermissions: [SecurityPermissions.ACCESS_PROJECT_LOGS],
                     requiresAuth: true,
                     breadcrumb: [
                         {
@@ -43,9 +41,7 @@ const projectLogRouters: Array<RouteRecordRaw> = [
                 name: PageName.PROJECT_LOG_TRANSACTION_LIST_PAGE,
                 component: ProjectLogTransactionListPage,
                 meta: {
-                    requiredPermissions: [
-                        SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-                    ],
+                    requiredPermissions: [SecurityPermissions.ACCESS_PROJECT_LOGS],
                     requiresAuth: true,
                     breadcrumb: [
                         {
@@ -69,9 +65,7 @@ const projectLogRouters: Array<RouteRecordRaw> = [
                 name: PageName.PROJECT_LOG_REPORT_PAGE,
                 component: LogReportPage,
                 meta: {
-                    requiredPermissions: [
-                        SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-                    ],
+                    requiredPermissions: [SecurityPermissions.ACCESS_PROJECT_LOGS],
                     requiresAuth: true,
                     breadcrumb: [
                         {
@@ -95,9 +89,7 @@ const projectLogRouters: Array<RouteRecordRaw> = [
                 name: PageName.PROJECT_LOG_SERVER_PAGE,
                 component: LogServerPage,
                 meta: {
-                    requiredPermissions: [
-                        SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-                    ],
+                    requiredPermissions: [SecurityPermissions.ACCESS_PROJECT_LOGS],
                     requiresAuth: true,
                     breadcrumb: [
                         {

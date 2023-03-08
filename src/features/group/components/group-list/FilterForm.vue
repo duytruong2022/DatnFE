@@ -27,12 +27,7 @@
             </div>
         </div>
         <template #custom-button>
-            <el-button
-                size="mini"
-                class="import-button-"
-                @click="onClickButtonUpload"
-                v-if="canImportCSV"
-            >
+            <el-button size="mini" class="import-button-" @click="onClickButtonUpload">
                 {{ $t('common.importFiles.import') }}
             </el-button>
         </template>
@@ -59,12 +54,6 @@ export default class FilterForm extends mixins(GroupMixin) {
     get canCreateGroup(): boolean {
         return hasPermissionToAccessRouteInConstellation([
             SecurityPermissions.MANAGE_USERS_GROUPS,
-        ]);
-    }
-
-    get canImportCSV(): boolean {
-        return hasPermissionToAccessRouteInConstellation([
-            SecurityPermissions.IMPORT_CSV,
         ]);
     }
 

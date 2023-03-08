@@ -286,36 +286,6 @@ export default class FilterForm extends mixins(UtilMixins) {
         }));
     }
 
-    get canImportCSV(): boolean {
-        if (projectModule.selectedProjectId) {
-            return hasPermissionToAccessRouteInProject([
-                ProjectSecurityPermissions.GENERAL_IMPORT_CSV,
-            ]);
-        } else if (
-            authModule.selectedAccessModule === AccessModules.SPACIALYTIC_CONSTELLATION
-        ) {
-            return hasPermissionToAccessRouteInConstellation([
-                SecurityPermissions.IMPORT_CSV,
-            ]);
-        }
-        return true;
-    }
-
-    get canConfigLDAP(): boolean {
-        if (projectModule.selectedProjectId) {
-            return hasPermissionToAccessRouteInProject([
-                ProjectSecurityPermissions.GENERAL_LDAP_CONFIGURATION,
-            ]);
-        } else if (
-            authModule.selectedAccessModule === AccessModules.SPACIALYTIC_CONSTELLATION
-        ) {
-            return hasPermissionToAccessRouteInConstellation([
-                SecurityPermissions.CONFIG_LDAP,
-            ]);
-        }
-        return true;
-    }
-
     get canCreateUser(): boolean {
         if (projectModule.selectedProjectId) {
             return hasPermissionToAccessRouteInProject([

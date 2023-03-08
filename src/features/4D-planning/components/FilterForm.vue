@@ -39,12 +39,6 @@ export default class FilterForm extends mixins(UtilMixins) {
         ]);
     }
 
-    get canImportCSV(): boolean {
-        return hasPermissionToAccessRouteInConstellation([
-            SecurityPermissions.IMPORT_CSV,
-        ]);
-    }
-
     async resetFilter(): Promise<void> {
         this.filterForm = {
             keyword: '',

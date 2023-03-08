@@ -25,12 +25,7 @@
             </div>
         </div>
         <template #custom-button>
-            <el-button
-                size="mini"
-                class="import-button"
-                @click="onClickButtonUpload"
-                v-if="canImportCSV"
-            >
+            <el-button size="mini" class="import-button" @click="onClickButtonUpload">
                 {{ $t('common.importFiles.import') }}
             </el-button>
         </template>
@@ -41,17 +36,9 @@
 import { mixins } from 'vue-class-component';
 
 import { projectGroupModule, initQueryString } from '../store';
-import { AccessModules, DEFAULT_FIRST_PAGE, LIMIT_PER_PAGE } from '@/common/constants';
+import { DEFAULT_FIRST_PAGE, LIMIT_PER_PAGE } from '@/common/constants';
 import { IProjectGroupListQueryString } from '../interfaces';
 import { ElLoading } from 'element-plus';
-import {
-    hasPermissionToAccessRouteInProject,
-    hasPermissionToAccessRouteInConstellation,
-} from '@/common/helpers';
-import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
-import { authModule } from '@/features/auth/store';
-import { projectModule } from '@/features/project/store';
-import { SecurityPermissions } from '@/features/security-profile/constants';
 import { ProjectGroupMixin } from '../mixins/ProjectGroupMixin';
 
 export default class FilterForm extends mixins(ProjectGroupMixin) {
@@ -59,21 +46,6 @@ export default class FilterForm extends mixins(ProjectGroupMixin) {
         keyword: '',
         profileIds: [],
     };
-
-    get canImportCSV(): boolean {
-        if (projectModule.selectedProjectId) {
-            return hasPermissionToAccessRouteInProject([
-                ProjectSecurityPermissions.GENERAL_IMPORT_CSV,
-            ]);
-        } else if (
-            authModule.selectedAccessModule === AccessModules.SPACIALYTIC_CONSTELLATION
-        ) {
-            return hasPermissionToAccessRouteInConstellation([
-                SecurityPermissions.IMPORT_CSV,
-            ]);
-        }
-        return true;
-    }
 
     async created() {
         const loading = ElLoading.service({ target: '.page-wrapper' });

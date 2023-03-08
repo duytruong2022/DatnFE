@@ -36,8 +36,6 @@ export default class PermissionList extends UtilMixins {
 
     manageUsersGroupsPermissionIndex = 0;
     manageUsersGroupsPermissionChildrenIndexList: number[] = [];
-    accessProjectLogAndReportPermissionIndex = 0;
-    accessProjectLogPermissionIndex = 0;
 
     get permissionList(): SecurityPermissions[] {
         return Object.values(SecurityPermissions);
@@ -72,20 +70,6 @@ export default class PermissionList extends UtilMixins {
                 this.selectedPermissionList[index] = value;
                 this.$emit('on-change', value, this.permissionList[index]);
             });
-        } else if (
-            permission === SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS &&
-            value
-        ) {
-            this.selectedPermissionList[this.accessProjectLogPermissionIndex] = value;
-            this.$emit('on-change', value, SecurityPermissions.ACCESS_PROJECT_LOGS);
-        } else if (permission === SecurityPermissions.ACCESS_PROJECT_LOGS && !value) {
-            this.selectedPermissionList[this.accessProjectLogAndReportPermissionIndex] =
-                value;
-            this.$emit(
-                'on-change',
-                value,
-                SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-            );
         }
     }
 
@@ -100,12 +84,6 @@ export default class PermissionList extends UtilMixins {
     created() {
         this.manageUsersGroupsPermissionIndex = this.permissionList.findIndex(
             (item) => item === SecurityPermissions.MANAGE_USERS_GROUPS,
-        );
-        this.accessProjectLogAndReportPermissionIndex = this.permissionList.findIndex(
-            (item) => item === SecurityPermissions.ACCESS_PROJECT_LOGS_REPORTS,
-        );
-        this.accessProjectLogPermissionIndex = this.permissionList.findIndex(
-            (item) => item === SecurityPermissions.ACCESS_PROJECT_LOGS,
         );
         this.manageUsersGroupsPermissionChildrenIndexList = [];
         ManageUsersGroupsPermissions.forEach((permission) => {
