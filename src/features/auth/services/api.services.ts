@@ -27,13 +27,6 @@ class AuthApiService extends ApiService {
         );
     }
 
-    preLogin(user: ILoginForm) {
-        return this.client.post<IPreLoginResponse, IBodyResponse<IPreLoginResponse>>(
-            `${this.baseUrl}/pre-login`,
-            user,
-        );
-    }
-
     loginLDAP(user: ILoginLDAPForm) {
         return this.client.post<ILoginResponse, IBodyResponse<ILoginResponse>>(
             `${this.baseUrl}/login-ldap`,

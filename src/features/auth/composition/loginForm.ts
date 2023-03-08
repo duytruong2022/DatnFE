@@ -61,26 +61,6 @@ export function setupLoginForm() {
         });
         values.email = values.email?.trim().toLowerCase();
 
-        const preLoginReponse = await authService.preLogin(values);
-        if (!preLoginReponse.success) {
-            showErrorNotificationFunction(preLoginReponse.message);
-            loading.close();
-            return;
-        }
-        if (preLoginReponse.data.isBeingLoggedIn) {
-            const isConfirm = await showConfirmPopUpFunction(
-                i18n.global.t('login.message.logoutOtherDevice.confirmAsk'),
-                i18n.global.t('login.message.logoutOtherDevice.title') as string,
-                {
-                    confirmButtonText: i18n.global.t('app.buttons.yes'),
-                    cancelButtonText: i18n.global.t('app.buttons.no'),
-                },
-            );
-            if (!isConfirm) {
-                loading.close();
-                return;
-            }
-        }
         const response = await authService.login(values);
         if (response.success) {
             if (
