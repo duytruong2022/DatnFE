@@ -34,13 +34,12 @@
                             :content="$t('group.groupList.tooltip.edit')"
                             placement="top"
                         >
-                            <el-button
-                                type="warning"
-                                size="mini"
+                            <el-icon
+                                class="view-icon"
                                 @click="onClickButtonEdit(scope.row)"
                             >
                                 <EditIcon class="action-icon" />
-                            </el-button>
+                            </el-icon>
                         </el-tooltip>
                         <el-tooltip
                             placement="top"
@@ -149,6 +148,11 @@ export default class Planning4DAnalyzerPage extends mixins(UtilMixins) {
         });
     }
 
+    onClickButtonEdit(planning: IPlanning) {
+        projectPlanningModule.setPlanning(planning);
+        projectPlanningModule.setIsShowPlanningPopup(true);
+    }
+
     updatedAt(date: Date): string {
         return moment(date).fmDHTMLXString();
     }
@@ -172,6 +176,7 @@ export default class Planning4DAnalyzerPage extends mixins(UtilMixins) {
 
 :deep(.view-icon) {
     margin-right: 0px !important;
+    margin-right: 20px !important;
     cursor: pointer;
 }
 .action-icon {

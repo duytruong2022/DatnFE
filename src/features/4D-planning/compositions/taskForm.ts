@@ -1,9 +1,7 @@
 import {
-    ARRAY_MAX_LENGTH,
     DATE_TIME_FORMAT,
     INPUT_TEXT_MAX_LENGTH,
     INTEGER_POSITIVE_MAX_VALUE,
-    INTEGER_POSITIVE_MIN_VALUE,
 } from '@/common/constants';
 import { showErrorNotificationFunction } from '@/common/helpers';
 import yup from '@/plugins/yup';
@@ -12,10 +10,8 @@ import moment from 'moment';
 import { useField, useForm } from 'vee-validate';
 import { computed } from 'vue-demi';
 import {
-    TaskConstraint,
     TaskDuration,
     TaskPercentageCompletion,
-    TaskPhysicalQuantityUnit,
     TaskStatus,
     TaskType,
 } from '../constants';
@@ -24,7 +20,6 @@ import { projectPlanningService } from '../services/planning.service';
 import { projectPlanningModule } from '../store';
 import uniq from 'lodash/uniq';
 import { ref } from 'vue';
-import i18n from '@/plugins/vue-i18n';
 import { projectModule } from '@/features/project/store';
 import localStorageAuthService from '@/common/authStorage';
 
@@ -251,22 +246,22 @@ export const useTaskForm = () => {
                     ...values,
                     start: values.start
                         ? moment(values.start)
-                              .utc()
+                              .add(8, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     finish: values.finish
                         ? moment(values.finish)
-                              .utc()
+                              .add(17, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     actualStart: values.actualStart
                         ? moment(values.actualStart)
-                              .utc()
+                              .add(8, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     actualFinish: values.actualFinish
                         ? moment(values.actualFinish)
-                              .utc()
+                              .add(17, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     isUpdate: undefined,
@@ -283,22 +278,22 @@ export const useTaskForm = () => {
                     ...values,
                     start: values.start
                         ? moment(values.start)
-                              .utc()
+                              .add(8, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     finish: values.finish
                         ? moment(values.finish)
-                              .utc()
+                              .add(17, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     actualStart: values.actualStart
                         ? moment(values.actualStart)
-                              .utc()
+                              .add(8, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     actualFinish: values.actualFinish
                         ? moment(values.actualFinish)
-                              .utc()
+                              .add(17, 'hour')
                               .format(DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_SS_COLON)
                         : null,
                     isUpdate: undefined,
@@ -311,7 +306,6 @@ export const useTaskForm = () => {
         }
         loading.close();
         if (response.success) {
-            projectPlanningModule.setNeedReload3DViewer(true);
             return response.data;
         } else if (!response?.isRequestError) {
             showErrorNotificationFunction(response.message);

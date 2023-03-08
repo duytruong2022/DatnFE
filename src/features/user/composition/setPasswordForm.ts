@@ -52,24 +52,17 @@ export const setupSetPasswordForm = () => {
             userModule.setIsShowSetPasswordForm(false);
             userModule.setSelectedUser(null);
 
-            const selectedNotificationId = computed(
-                () => notificationModule.selectedNotification?._id,
-            );
-            if (selectedNotificationId.value) {
-                const loading = ElLoading.service({ target: '.page-wrapper' });
-                const selectedAccessModule = computed(
-                    () => authModule.selectedAccessModule,
-                );
-                await Promise.all([
-                    notificationModule.getNotificationList(),
-                    notificationModule.getPendingNotificationCount(
-                        selectedAccessModule.value ? [selectedAccessModule.value] : null,
-                    ),
-                    userModule.getUserList(),
-                ]);
-                loading.close();
-                notificationModule.setSelectedNotification(null);
-            }
+            const loading = ElLoading.service({ target: '.page-wrapper' });
+            const selectedAccessModule = computed(() => authModule.selectedAccessModule);
+            await Promise.all([
+                notificationModule.getNotificationList(),
+                notificationModule.getPendingNotificationCount(
+                    selectedAccessModule.value ? [selectedAccessModule.value] : null,
+                ),
+                userModule.getUserList(),
+            ]);
+            loading.close();
+            notificationModule.setSelectedNotification(null);
         } else {
             showErrorNotificationFunction(response.message);
         }

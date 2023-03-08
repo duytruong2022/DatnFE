@@ -38,8 +38,6 @@ export interface IRegisterForm {
     countryId: string | undefined;
     language: SUPPORT_LANGUAGE;
     module: AccessModules | undefined;
-    projectName: string | undefined | null;
-    projectAdminEmail: string | undefined | null;
 }
 
 export interface ILoginResponse {

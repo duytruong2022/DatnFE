@@ -101,7 +101,6 @@ export const validateSupportRequestSchema = yup.object({
         .nullable()
         .max(INPUT_NAME_MAX_LENGTH)
         .label('version'),
-    site: yup.string().trim().required().max(INPUT_NAME_MAX_LENGTH).label('site'),
     object: yup
         .string()
         .trim()

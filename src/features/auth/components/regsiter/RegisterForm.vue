@@ -157,13 +157,9 @@ export default class RegisterForm extends mixins(UtilMixins) {
                     countryId: this.form.countryId as string,
                     language: this.form.language as string,
                     module: this.form.module as string,
-                    projectName: '',
-                    projectAdminEmail: '',
                 },
                 errors: {
                     ...this.form.errors,
-                    projectName: undefined,
-                    projectAdminEmail: undefined,
                 },
             });
         }

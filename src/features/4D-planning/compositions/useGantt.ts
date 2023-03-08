@@ -97,6 +97,7 @@ export const useGantt = (gantt: GanttStatic) => {
         const planningResponse = await projectPlanningModule.getPlanning(
             projectPlanningModule.planningId,
         );
+
         loading.close();
         if (planningResponse.success) {
             projectPlanningModule.setPlanning(planningResponse.data);
@@ -749,6 +750,7 @@ export const useGantt = (gantt: GanttStatic) => {
             }
             return 0;
         });
+
         addCalendars();
         gantt.parse({
             data: tasks,
@@ -1524,6 +1526,8 @@ export const useGantt = (gantt: GanttStatic) => {
 
     const fetchData = async () => {
         const response = await getPlanning();
+        console.log(response);
+
         if (response?.success) {
             await parseData(response?.data);
         }

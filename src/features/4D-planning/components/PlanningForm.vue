@@ -2,9 +2,9 @@
     <el-dialog
         width="500px"
         lock-scroll
-        v-model="isShowCalendarFormPopup"
-        @open="onOpen"
-        @closed="onClosed"
+        v-model="isOpening"
+        @open="handleOpen"
+        @closed="handleClose"
         custom-class="calendar-config-form-popup"
         destroy-on-close
     >
@@ -42,14 +42,7 @@ import { mixins, Options, setup } from 'vue-class-component';
 import { UtilMixins } from '@/mixins/utilMixins';
 import { projectPlanningModule } from '../store';
 import { usePlanningForm } from '../compositions/planningForm';
-import {
-    CurrencyType,
-    PlanningStatus,
-    TaskDuration,
-    TaskDurationFormat,
-    TaskPercentageCompletion,
-    TaskType,
-} from '../constants';
+import { PlanningStatus } from '../constants';
 import { calendarModule } from '@/features/calendar/store';
 import { projectPlanningService } from '../services/planning.service';
 import { FILE_NAME_MAX_LENGTH } from '@/common/constants';
@@ -59,7 +52,6 @@ import {
 } from '@/common/helpers';
 import { ElLoading } from 'element-plus';
 import { projectModule } from '@/features/project/store';
-import localStorageAuthService from '@/common/authStorage';
 
 @Options({
     component: {},
@@ -81,6 +73,12 @@ export default class PlanningForm extends mixins(UtilMixins) {
         }));
     }
 
+    get title() {
+        return projectPlanningModule.planning?._id
+            ? 'Update Planning'
+            : 'Create Planning';
+    }
+
     async getCalendarList() {
         const response = await calendarModule.getCalendarList(
             projectModule.selectedProjectId || '',
@@ -92,17 +90,16 @@ export default class PlanningForm extends mixins(UtilMixins) {
 
     async handleOpen() {
         const loading = ElLoading.service({ target: '.el-dialog' });
-        await this.getCalendarList();
+        console.log(projectPlanningModule.planning?._id);
+
         if (projectPlanningModule.planning?._id) {
             const response = await projectPlanningService.getPlanningInformation(
                 projectPlanningModule.planning?._id as string,
-                {
-                    path: localStorageAuthService.getPlanningPermissions().path || '',
-                    projectId: projectModule.selectedProjectId || '',
-                },
             );
             if (response.success) {
                 this.planningStatus = response.data.status;
+                console.log(response.data);
+
                 this.form.setValues({
                     name: response.data.name,
                 });
@@ -118,6 +115,7 @@ export default class PlanningForm extends mixins(UtilMixins) {
     handleClose() {
         projectPlanningModule.setIsShowPlanningPopup(false);
         this.form.resetForm();
+        projectPlanningModule.setPlanning(null);
     }
 
     async handleSubmit() {

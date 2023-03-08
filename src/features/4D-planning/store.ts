@@ -460,10 +460,7 @@ class ProjectPlanningModule extends VuexModule {
 
     @Action
     async getOriginalPlanning(planningId: string) {
-        const response = await projectPlanningService.getPlanningInformation(planningId, {
-            path: localStorageAuthService.getPlanningPermissions().path || '',
-            projectId: projectModule.selectedProjectId || '',
-        });
+        const response = await projectPlanningService.getPlanningInformation(planningId);
 
         if (response.success) {
             this.MUTATE_PLANNING_LIST([response.data]);

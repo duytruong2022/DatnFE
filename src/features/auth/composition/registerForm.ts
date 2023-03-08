@@ -25,26 +25,6 @@ const registerFormValidationSchema = yup.object({
     countryId: yup.string().max(INPUT_TEXT_MAX_LENGTH).required(),
     language: yup.string().oneOf(Object.values(SUPPORT_LANGUAGE)).required(),
     module: yup.string().oneOf(Object.values(AccessModules)).required(),
-    projectName: yup
-        .string()
-        .nullable()
-        .when('module', {
-            is: AccessModules.SPACIALYTIC_CONSTELLATION,
-            then: yup.string().trim().max(INPUT_TEXT_MAX_LENGTH).nullable().required(),
-        }),
-    projectAdminEmail: yup
-        .string()
-        .nullable()
-        .when('module', {
-            is: AccessModules.SPACIALYTIC_CONSTELLATION,
-            then: yup
-                .string()
-                .max(INPUT_TEXT_MAX_LENGTH)
-                .matches(FORM_VALIDATION.email)
-                .nullable()
-                .trim()
-                .required(),
-        }),
 });
 
 export function setupRegisterForm() {
@@ -56,8 +36,6 @@ export function setupRegisterForm() {
         countryId: '',
         language: SUPPORT_LANGUAGE.FR,
         module: AccessModules.SPACIALYTIC_CONSTELLATION,
-        projectName: '',
-        projectAdminEmail: '',
     };
     const { handleSubmit, errors, resetForm, validate, setErrors } = useForm({
         initialValues: initValues,

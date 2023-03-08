@@ -80,14 +80,9 @@ class ProjectPlanningService extends ApiService {
         );
     }
 
-    async getPlanningInformation(planningId: string, query: IPlanningGetListQuery) {
+    async getPlanningInformation(planningId: string) {
         return await this.client.get<void, IBodyResponse<IPlanning>>(
             `${this.baseUrl}/${planningId}/planning-info`,
-            {
-                params: {
-                    ...query,
-                },
-            },
         );
     }
 
