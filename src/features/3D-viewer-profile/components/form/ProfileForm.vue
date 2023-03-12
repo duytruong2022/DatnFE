@@ -173,6 +173,6 @@ export default class ProfileForm extends mixins(UtilMixins) {
     background-color: #fff;
     border-radius: 16px;
     padding: 30px 25px;
-    min-height: calc(100vh - 90px);
+    // min-height: calc(100vh - 90px);
 }
 </style>

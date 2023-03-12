@@ -294,7 +294,7 @@ export default {
             physicalQuantity: 'Physical quantity',
             actualPhysicalQuantity: 'Actual physical quantity',
             remainPhysicalQuantity: 'Remaining physical quantity',
-            rules: 'Rules',
+            rules: 'Percent Completed',
             code: 'Activity code',
             appearanceProfile: 'Appreance profile',
             resouce3D: 'Resource 3D',

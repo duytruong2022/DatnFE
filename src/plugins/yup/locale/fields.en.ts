@@ -85,7 +85,7 @@ export const fields = {
     physicalQuantity: 'Physical quantity',
     actualPhysicalQuantity: 'Actual physical quantity',
     remainPhysicalQuantity: 'Remaining physical quantity',
-    rules: 'Rules',
+    rules: 'Percent Completed',
     code: 'Code',
     appearanceProfile: 'Appreance profile',
     resouce3D: 'Resource 3D',

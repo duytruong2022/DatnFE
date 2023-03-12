@@ -33,6 +33,7 @@
                             effect="dark"
                             :content="$t('group.groupList.tooltip.edit')"
                             placement="top"
+                            v-if="canCreatePlanning"
                         >
                             <el-icon
                                 class="view-icon"
@@ -44,7 +45,6 @@
                         <el-tooltip
                             placement="top"
                             :content="$t('abs.table.action.view')"
-                            v-if="canReadWBS(scope.row)"
                         >
                             <el-icon class="view-icon" @click="onClickView(scope.row)"
                                 ><ViewIcon
@@ -74,9 +74,11 @@ import { ElLoading } from 'element-plus';
 import { projectModule } from '@/features/project/store';
 import { PlanningOrderBy } from '../constants';
 import moment from 'moment';
-import { absModule } from '@/features/abs/store';
 import localStorageAuthService from '@/common/authStorage';
-import { getPbsGroupPermissionsForFile } from '@/common/helpers';
+import {
+    getPbsGroupPermissionsForFile,
+    hasPermissionToAccessRouteInProject,
+} from '@/common/helpers';
 import { IFTPFile } from '@/common/interfaces';
 import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
 import FilterForm from '../components/FilterForm.vue';
@@ -102,8 +104,10 @@ export default class Planning4DAnalyzerPage extends mixins(UtilMixins) {
         return localStorageAuthService.getPbsGroupPermissions();
     }
 
-    get projectFolderAssignPbs() {
-        return absModule.projectFolderAssignPbs;
+    get canCreatePlanning(): boolean {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_CREATE_PLANNING,
+        ]);
     }
 
     get planningList(): IPlanning[] {
@@ -114,16 +118,10 @@ export default class Planning4DAnalyzerPage extends mixins(UtilMixins) {
         return projectPlanningModule.selectedPlannings;
     }
 
-    canReadWBS(planning: IPlanning): boolean {
-        return getPbsGroupPermissionsForFile(
-            this.projectFolderAssignPbs,
-            this.planningList.map((planning) => ({
-                ...planning,
-                _id: planning.fileId || '',
-            })) as unknown as IFTPFile[],
-            this.pbsGroupPermissions,
-            planning.fileId || '',
-        )?.includes(ProjectSecurityPermissions['4DPLANNING_READ_WBS_STRUCTURE']);
+    get canReadWBS() {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_VIEW_PLANING,
+        ]);
     }
 
     async fetchData() {

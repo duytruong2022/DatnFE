@@ -57,7 +57,7 @@ const taskFormSchema = yup
             .notRequired(),
         rules: yup
             .number()
-            .max(INTEGER_POSITIVE_MAX_VALUE)
+            .max(100)
             .transform((val) => (+val ? val : null))
             .nullable()
             .notRequired(),
@@ -239,6 +239,11 @@ export const useTaskForm = () => {
             ]),
         );
         let response;
+        if (values.status === TaskStatus.FINISHED) {
+            values.rules = 100;
+        } else if (values.status === TaskStatus.TODO) {
+            values.rules = 0;
+        }
         if (!selectedTaskId.value) {
             response = await projectPlanningService.createTask(
                 projectPlanningModule.planning?._id || '',

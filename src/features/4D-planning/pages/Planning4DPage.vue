@@ -2,23 +2,25 @@
     <div>
         <div class="btn-wrapper">
             <div class="head-btn-group">
-                <el-button
+                <!-- <el-button
                     @click="handleClickUserField"
                     type="primary"
                     v-if="canReadUserField"
                     >{{ $t('planning.buttons.userField') }}</el-button
-                >
-
+                > -->
+            </div>
+        </div>
+        <div class="chart-header">
+            <div class="display-flex">
+                <SearchBox @search="handleSearch" />
                 <el-button
+                    class="grid-button"
                     style="margin-left: 10px"
                     @click="onGridSetting"
                     type="primary"
                     >{{ $t('planning.buttons.gridSettings') }}</el-button
                 >
             </div>
-        </div>
-        <div class="chart-header">
-            <SearchBox @search="handleSearch" />
             <div class="action-buttons">
                 <!-- <el-tooltip :content="$t('planning.buttons.rescheduling')">
                     <el-button @click="onReschedulingGantt">
@@ -58,15 +60,8 @@
         />
         <GridViewSettingsPopup @save="saveSettings" />
         <TaskFieldPopup @deleted-field="handleFieldDeleted" />
-        <AssignedTaskNamesPopup />
-        <PlanningForm @updated-planning="handleUpdatedPlanning" />
-        <GanttContextMenu />
-        <LinkPopup @add-new-links="handleAddNewLinks" />
-        <SaveAsPlanningPopup />
-        <LinkDetailFormPopup
-            @delete-link="handleDeleteLink"
-            @updated-link="handleUpdatedLink"
-        />
+
+        <!-- <PlanningForm @updated-planning="handleUpdatedPlanning" /> -->
         <RenameTaskFormPopup @updateTask="updateOneTask" />
     </div>
 </template>
@@ -75,21 +70,9 @@
 import { mixins, Options, setup } from 'vue-class-component';
 import { projectPlanningModule } from '@/features/4D-planning/store';
 import { Watch } from 'vue-property-decorator';
-import { DialogType, Viewer3DActions } from '@/features/3D-viewer/constant';
 import { webViewer3DModule } from '@/features/3D-viewer/store';
-import DelegatePopup from '../components/delegate/DelegatePopup.vue';
 import TaskFieldPopup from '../components/additional-task-field/TaskFieldPopup.vue';
-import SynthesisFormPopup from '../components/synthesis/SynthesisFormPopup.vue';
 import TaskPopup from '../components/task/TaskPopup.vue';
-import ResourcePopup from '../components/resource/ResourcePopup.vue';
-import ResourceGroupPopup from '../components/resource/ResourceGroupPopup.vue';
-import AssignResourceForm from '../components/resource/AssignResourceForm.vue';
-import AssignResourceGroupForm from '../components/resource/AssignResourceGroupForm.vue';
-import AppearanceProfilePopup from '../components/resource/AppearanceProfilePopup.vue';
-import AssignedTaskNamesPopup from '../components/resource/AssignedTaskNamesPopup.vue';
-import BaselineFormPopup from '../components/BaselineFormPopup.vue';
-import Viewer3D from '../components/Viewer3D.vue';
-import AbsPopup from '@/features/4D-planning/components/AbsPopup.vue';
 import GanttContextMenu from '@/features/4D-planning/components/context-menu/GanttContextMenu.vue';
 import LinkPopup from '../components/link/LinkPopup.vue';
 import RenameTaskFormPopup from '../components/task/RenameTaskFormPopup.vue';
@@ -118,9 +101,7 @@ import { useRoute } from 'vue-router';
 import GridViewSettingsPopup from '../components/GridViewSettingsPopup.vue';
 import ganttChartStorage from '@/common/ganttChartStorage';
 import { Gantt, GanttStatic } from 'dhtmlx-gantt';
-import TopDownFormPopup from '../components/TopDownFormPopup.vue';
 import i18n from '@/plugins/vue-i18n';
-import BottomUpFormPopup from '../components/BottomUpFormPopup.vue';
 import SearchBox from '../components/SearchBox.vue';
 import { DATE_TIME_FORMAT, PageName } from '@/common/constants';
 import moment from 'moment';
@@ -138,59 +119,27 @@ import {
     Refresh as RefreshIcon,
     Setting as SettingIcon,
 } from '@element-plus/icons-vue';
-import {
-    ProfilePermissionPrefix,
-    ProjectSecurityPermissions,
-} from '@/features/3D-viewer-profile/constants';
 import { Planning4DMixin } from '../mixins/mixin';
-import ImportXmlForm from '../components/export-xml/ImportXmlFile.vue';
-import ImportXmlDetail from '../components/export-xml/ImportXmlDetail.vue';
 import { IFile } from '@/common/interfaces';
-import localStorageAuthService, { AUTH_SERVICE_KEY } from '@/common/authStorage';
+import localStorageAuthService from '@/common/authStorage';
 import { projectModule } from '@/features/project/store';
-import ImportResourcePopup from '../components/resource/import/ImportResourcePopup.vue';
-import ExportPlanningPopup from '../components/ExportPlanningPopup.vue';
 import router from '@/plugins/vue-router';
 import { commonModule } from '@/features/common/common.store';
-import SaveAsPlanningPopup from '../components/SaveAsPopup.vue';
-import ActivityCodePopup from '../components/activity-code/ActivityCodePopup.vue';
-import AssignActivityCodePopup from '../components/activity-code/AssignActivityCodePopup.vue';
 import LinkDetailFormPopup from '../components/link/LinkDetailFormPopup.vue';
-import { webViewer3DService } from '@/features/3D-viewer/services/api.service';
 
 @Options({
     components: {
         TaskFieldPopup,
-        DelegatePopup,
         TaskPopup,
-        ResourcePopup,
-        ResourceGroupPopup,
         GridViewSettingsPopup,
-        BaselineFormPopup,
-        SynthesisFormPopup,
-        AssignResourceForm,
-        AssignResourceGroupForm,
-        AssignedTaskNamesPopup,
-        Viewer3D,
-        AppearanceProfilePopup,
-        TopDownFormPopup,
-        ActivityCodePopup,
-        BottomUpFormPopup,
         PlanningForm,
-        AbsPopup,
         SearchBox,
-        ImportResourcePopup,
-        ImportXmlForm,
-        ExportPlanningPopup,
-        ImportXmlDetail,
         GanttContextMenu,
         LinkPopup,
         ZoomInIcon,
         ZoomOutIcon,
         RefreshIcon,
         SettingIcon,
-        SaveAsPlanningPopup,
-        AssignActivityCodePopup,
         LinkDetailFormPopup,
         RenameTaskFormPopup,
     },
@@ -249,39 +198,6 @@ export default class Planning4DPage extends mixins(Planning4DMixin) {
         return projectPlanningModule.needReload3DViewer;
     }
 
-    get canReadActivityCode() {
-        return this.planningPermissions?.includes(
-            ProjectSecurityPermissions['4DPLANNING_READ_ACTIVITY_CODE'],
-        );
-    }
-
-    get canReadResource() {
-        return this.planningPermissions?.includes(
-            ProjectSecurityPermissions['4DPLANNING_READ_RESOURCE'],
-        );
-    }
-
-    get canAssignResource() {
-        return (
-            this.planningPermissions?.includes(
-                ProjectSecurityPermissions['4DPLANNING_ASSIGN_RESOURCE_TO_TASK'],
-            ) && !this.selectedTasksIncludeMilestone
-        );
-    }
-
-    get canReadUserField() {
-        return this.planningPermissions?.includes(
-            ProjectSecurityPermissions['4DPLANNING_READ_USER_DEFINED_FIELD'],
-        );
-    }
-    get canBottomUpProcess() {
-        return (
-            this.planningPermissions?.includes(
-                ProjectSecurityPermissions.CONSTELLATION_BOTTOM_UP_PROCESS,
-            ) && !projectPlanningModule.planning?.disableTopdownAndBottomup
-        );
-    }
-
     get isDisableBottomUp() {
         // check planning is has children planning
 
@@ -293,26 +209,6 @@ export default class Planning4DPage extends mixins(Planning4DMixin) {
         } else {
             return projectPlanningModule.planning?.clonedFromPlanningIds?.length === 0;
         }
-    }
-
-    get canDelegateTasks() {
-        return this.planningPermissions?.includes(
-            ProjectSecurityPermissions.CONSTELLATION_DELEGATE_TASKS,
-        );
-    }
-
-    get canRealizeSynthesis() {
-        return this.planningPermissions?.includes(
-            ProjectSecurityPermissions.CONSTELLATION_REALIZE_SYNTHESIS,
-        );
-    }
-
-    get canTopDownProcess() {
-        return (
-            this.planningPermissions?.includes(
-                ProjectSecurityPermissions.CONSTELLATION_REALIZE_SYNTHESIS,
-            ) && !projectPlanningModule.planning?.disableTopdownAndBottomup
-        );
     }
 
     get shouldEnableTopdown() {
@@ -390,6 +286,16 @@ export default class Planning4DPage extends mixins(Planning4DMixin) {
                     this.$t,
                     this.gantt.durationFormatter,
                 );
+            if (!projectPlanningModule.planningId) {
+                projectPlanningModule.setPlanningId(
+                    (this.$router.currentRoute as any)?.value?.query?.name,
+                );
+            }
+            console.log(
+                'projectPlanningModule.planningId',
+                projectPlanningModule.planningId,
+            );
+
             await this.gantt.initChart(true);
             this.registerOnClickRename();
         });
@@ -456,24 +362,7 @@ export default class Planning4DPage extends mixins(Planning4DMixin) {
         oldGanttId?: string;
         task: IProjectTask | undefined;
     }) {
-        if (!data.task) {
-            return;
-        }
-
-        const baselineTask = getBaselineTask(data.task._id);
-        const responseTask = convertToGanttTask(
-            data.task,
-            projectPlanningModule.planning?.additionalTaskFields || [],
-            baselineTask,
-        );
-
-        const oldGanttId = data.oldGanttId;
-        if (oldGanttId && oldGanttId !== responseTask.id) {
-            this.ganttInstance?.changeTaskId(oldGanttId, responseTask.id);
-        }
-        this.ganttInstance?.updateTask(responseTask.id, responseTask);
-        await this.gantt.handleAfterUpdateTaskByFormPopup(responseTask.id);
-        this.ganttInstance?.unselectTask();
+        await this.gantt.initChart(true);
     }
 
     async handleDelete(): Promise<void> {
@@ -1108,6 +997,12 @@ export default class Planning4DPage extends mixins(Planning4DMixin) {
     align-items: center;
     .rename-task-button {
         width: 24px;
+    }
+}
+.display-flex {
+    display: flex;
+    .grid-button {
+        margin-top: 5px;
     }
 }
 </style>

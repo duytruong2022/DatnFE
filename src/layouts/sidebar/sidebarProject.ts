@@ -38,7 +38,6 @@ export const sidebarProject = [
             ProjectSecurityPermissions.GENERAL_ADD_USER_FROM_CONSTELLATION,
             ProjectSecurityPermissions.GENERAL_MANAGE_USER_GROUP_OF_PROJECT,
             ProjectSecurityPermissions.GENERAL_CREATE_PROJECT_PROFILE,
-            ProjectSecurityPermissions.GENERAL_CREATE_PBS_STRUCTURE,
         ],
         requireProjectProfile: true,
         children: [
@@ -87,7 +86,7 @@ export const sidebarProject = [
         iconLink: require('@/assets/icons/building.svg'),
         name: 'app.sidebar.constellation.project.project.title',
         active: false,
-        requireProjectProfile: true,
+        // requireProjectProfile: true,
         children: [
             {
                 name: 'app.sidebar.constellation.project.project.4DAnalyzer',

@@ -48,26 +48,5 @@ const planningRouters: Array<RouteRecordRaw> = [
             },
         ],
     },
-    {
-        path: '/project/3d-viewer',
-        component: MainLayout,
-        children: [
-            {
-                path: '',
-                name: PageName['3D_PAGE'],
-                component: Planning3DPage,
-                meta: {
-                    requiresAuth: true,
-                    isViewProject: true,
-                    breadcrumb: [
-                        {
-                            index: 1,
-                            text: 'planning.breadcrumb.viewer3D',
-                        },
-                    ],
-                },
-            },
-        ],
-    },
 ];
 export default planningRouters;

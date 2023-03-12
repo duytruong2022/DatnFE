@@ -36,8 +36,12 @@ import { SUPPORT_LANGUAGE } from '@/common/constants';
 import { calendarModule } from '../../store';
 import moment from 'moment';
 import CalendarConfigFormPopup from './CalendarConfigFormPopup.vue';
-import { showErrorNotificationFunction } from '@/common/helpers';
+import {
+    hasPermissionToAccessRouteInProject,
+    showErrorNotificationFunction,
+} from '@/common/helpers';
 import { ElLoading } from 'element-plus';
+import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
 interface CalendarApi extends Vue {
     // eslint-disable-next-line @typescript-eslint/ban-types
     getApi: Function;
@@ -60,7 +64,16 @@ export default class Calendar extends mixins(UtilMixins) {
         return calendarModule.currentCalendarMonth;
     }
 
+    get canCreateCalendar() {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_CREATE_CALENDAR,
+        ]);
+    }
+
     onClickDate = (selectedDate: DateSelectArg) => {
+        if (!this.canCreateCalendar) {
+            return;
+        }
         selectedDate?.view?.calendar?.unselect();
         calendarModule.setSelectedDate(moment(selectedDate.start).fmDayString());
 

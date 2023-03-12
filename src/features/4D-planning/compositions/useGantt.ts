@@ -993,9 +993,9 @@ export const useGantt = (gantt: GanttStatic) => {
                 projectPlanningModule.setTaskPopupParams({
                     selectedTaskId: task._id,
                 });
-                projectPlanningModule.setIsDisableButtonAdd(
-                    !checkPermissionToCreateChidTask(task),
-                );
+                // projectPlanningModule.setIsDisableButtonAdd(
+                //     !checkPermissionToCreateChidTask(task),
+                // );
                 return true;
             },
             null,
@@ -1045,90 +1045,6 @@ export const useGantt = (gantt: GanttStatic) => {
                     task.baselineCurrentFinish,
                     'xml_date',
                 );
-                return true;
-            },
-            null,
-        );
-
-        gantt.attachEvent(
-            'onBeforeLinkAdd',
-            (id: string, link: ITaskLink) => {
-                if (
-                    !localStorageAuthService
-                        .getPlanningPermissions()
-                        .permissions.includes(
-                            ProjectSecurityPermissions['4DPLANNING_CREATE_LINKS'],
-                        )
-                ) {
-                    showErrorNotificationFunction(
-                        t('planning.task.errors.insufficientPermission'),
-                    );
-                    return false;
-                }
-
-                // do not allow creating links with WBS
-                const sourceTask: IGanttChartTask = gantt.getTask(link.source);
-                const targetTask: IGanttChartTask = gantt.getTask(link.target);
-                if (
-                    !sourceTask ||
-                    !targetTask ||
-                    sourceTask.type === TaskType.PROJECT ||
-                    targetTask.type === TaskType.PROJECT
-                ) {
-                    return false;
-                }
-
-                const linkExists =
-                    gantt
-                        .getLinks()
-                        .findIndex(
-                            (item) =>
-                                item.source === link.source &&
-                                link.target === item.target &&
-                                link.type === item.type,
-                        ) !== -1;
-                // prevent gantt create duplicate link
-                if (linkExists) {
-                    return false;
-                }
-                return true;
-            },
-            null,
-        );
-
-        gantt.attachEvent(
-            'onAfterLinkAdd',
-            async (id: string, link: ITaskLink) => {
-                if (addingLinksForRender) {
-                    return true;
-                }
-                const response = await projectPlanningService.createLink(
-                    planningId.value as string,
-                    {
-                        source: gantt.getTask(link.source)._id,
-                        target: gantt.getTask(link.target)._id,
-                        type: getLinkType(Number(link.type)),
-                        lag: 0,
-                        projectId: projectModule.selectedProjectId || '',
-                        path: localStorageAuthService.getPlanningPermissions().path || '',
-                    },
-                );
-                if (response.success) {
-                    await bulkUpdateTaskAutoScheduling();
-                    projectPlanningModule.setCreatedLink(true);
-                    gantt.changeLinkId(id, response.data.link._id);
-                    projectPlanningModule.planning?.taskLinks.push(response.data.link);
-                    showSuccessNotificationFunction(
-                        t('planning.task.messages.createdLink'),
-                    );
-                    return true;
-                } else {
-                    const createdLinks = gantt.getLinks();
-                    if (createdLinks.length) {
-                        gantt.deleteLink(id);
-                    }
-                    showErrorNotificationFunction(response.message);
-                }
                 return true;
             },
             null,

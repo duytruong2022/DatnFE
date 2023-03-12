@@ -1,8 +1,5 @@
 <template>
     <div class="content-wrapper">
-        <UserTimeChar />
-    </div>
-    <div class="content-wrapper">
         <SupportRequestCategoryChar />
     </div>
     <div class="content-wrapper">

@@ -25,8 +25,6 @@
 </template>
 
 <script lang="ts">
-import { AccessModules } from '@/common/constants';
-import { authModule } from '@/features/auth/store';
 import { UtilMixins } from '@/mixins/utilMixins';
 import forEach from 'lodash/forEach';
 import intersection from 'lodash/intersection';
@@ -36,10 +34,6 @@ import {
     ProfilePermissionCategories,
     ProjectSecurityPermissions,
     ProfilePermissionTree,
-    Viewer3DPermissionTree,
-    PermissionGroups,
-    DenyPermission3DProjectProfile,
-    DenyPermission3DWebViewerTree,
 } from '../../constants';
 import { IPermissionTree, IProfile, ITreeStatus } from '../../interfaces';
 import { profileModule } from '../../store';
@@ -63,45 +57,13 @@ export default class ProfilePermissionForm extends mixins(UtilMixins) {
     readonly error!: string;
 
     get permissionTree() {
-        if (authModule.selectedAccessModule === AccessModules.SPACIALYTIC_CONSTELLATION) {
-            return this.filterPermissions(
-                ProfilePermissionTree,
-                DenyPermission3DProjectProfile,
-            );
-        }
-        return this.filterPermissions(
-            Viewer3DPermissionTree,
-            DenyPermission3DWebViewerTree,
-        );
+        return ProfilePermissionTree;
     }
 
     onCheckNode(node: IPermissionTree, status: ITreeStatus): void {
         const selectedPermissions = status.checkedNodes.map(
             (permission) => permission.name as string,
         );
-        forEach(PermissionGroups, (value, key) => {
-            if (key === node.name) {
-                value.forEach((permissionToDeselect) => {
-                    (this.$refs.refPermissionTree as ITreeRefs).setChecked(
-                        permissionToDeselect as
-                            | ProjectSecurityPermissions
-                            | ProfilePermissionCategories,
-                        false,
-                        true,
-                    );
-                });
-            } else if (
-                intersection(value, selectedPermissions).length > 0 &&
-                !selectedPermissions.includes(key)
-            ) {
-                selectedPermissions.push(key);
-                (this.$refs.refPermissionTree as ITreeRefs).setChecked(
-                    key as ProjectSecurityPermissions | ProfilePermissionCategories,
-                    true,
-                    false,
-                );
-            }
-        });
         this.$emit('onCheckNode', selectedPermissions);
     }
 
@@ -147,7 +109,6 @@ export default class ProfilePermissionForm extends mixins(UtilMixins) {
 
 <style lang="scss" scoped>
 .custom-tree-node-container {
-    max-height: calc(100vh - 470px);
     overflow: auto;
 }
 </style>

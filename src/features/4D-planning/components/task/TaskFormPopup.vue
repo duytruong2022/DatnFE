@@ -136,11 +136,12 @@
         <div class="col-xl-4 col-lg-4 col-md-6 sm-12">
             <BaseInputNumber
                 v-model:value="form.rules"
-                :label="$t('planning.gantt.columns.rules')"
-                :placeholder="$t('planning.task.form.placeholders.rules')"
+                label="Percent Completed"
+                placeholder="Enter percent completed"
                 :allowDecimal="true"
                 :error="translateYupError(form.errors.rules as string)"
                 :castEmptyToNull="true"
+                :isDisabled="!inprogressStatus"
             />
         </div>
         <div
@@ -443,12 +444,6 @@ export default class TaskForm extends mixins(Planning4DMixin) {
         return localStorageAuthService.getPlanningPermissions().path;
     }
 
-    get canAssignResource() {
-        return this.planningPermissions.includes(
-            ProjectSecurityPermissions['4DPLANNING_ASSIGN_RESOURCE_TO_TASK'],
-        );
-    }
-
     async handleOpen(taskDetail: IProjectTask): Promise<void> {
         this.form.setErrors({
             isUpdate: undefined,
@@ -590,17 +585,13 @@ export default class TaskForm extends mixins(Planning4DMixin) {
     }
 
     // Temporary disabled to fix infinite loop when input finish date
-    @Watch('form.finish', { deep: true })
-    onChangeFinish(finish: Date | null) {
-        //     if (finish !== null && this.form.calendarId) {
-        //         this.$emit(
-        //             'calculateNewDuration',
-        //             this.form.ganttId,
-        //             this.form.start,
-        //             finish,
-        //             this.form.calendarId,
-        //         );
-        //     }
+    @Watch('form.status', { deep: true })
+    onChangeStatus(status: TaskStatus) {
+        if (status === TaskStatus.FINISHED) {
+            this.form.rules = 100;
+        } else if (status === TaskStatus.TODO) {
+            this.form.rules = 0;
+        }
     }
 
     @Watch('form.calendarId', { deep: true })

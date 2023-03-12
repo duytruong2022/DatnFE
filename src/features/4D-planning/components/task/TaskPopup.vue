@@ -158,11 +158,6 @@ export default class TaskPopup extends mixins(Planning4DMixin) {
             this.$emit('on-delete');
     }
 
-    @Watch('form.finish', { deep: true })
-    onChangeFinish(finish: Date | null) {
-        (this.$refs.taskGeneral as TaskFormPopup).onChangeFinish(finish);
-    }
-
     @Watch('form.calendarId', { deep: true })
     onCalendarId(calendarId: string) {
         (this.$refs.taskGeneral as TaskFormPopup).onCalendarId(calendarId);

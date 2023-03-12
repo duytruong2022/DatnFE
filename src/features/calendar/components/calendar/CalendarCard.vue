@@ -1,7 +1,7 @@
 <template>
-    <router-link :to="`/project/calendar/${calendar._id}`" class="calendar-link">
+    <div @click="onClickCalendar" class="calendar-link">
         <div class="calendar-card">
-            <div class="options">
+            <div class="options" v-if="canCreateCalendar">
                 <el-dropdown>
                     <span class="el-dropdown-link">
                         <setting-icon class="icon" />
@@ -33,7 +33,7 @@
                 <el-tag v-if="calendar?.isDefaultCalendar">Default</el-tag>
             </div>
         </div>
-    </router-link>
+    </div>
 </template>
 
 <script lang="ts">
@@ -46,17 +46,37 @@ import { calendarModule } from '../../store';
 import { ElLoading } from 'element-plus';
 import { calendarService } from '../../services/calendar.service';
 import {
+    hasPermissionToAccessRouteInProject,
     showConfirmPopUpFunction,
     showErrorNotificationFunction,
     showSuccessNotificationFunction,
 } from '@/common/helpers';
 import { projectModule } from '@/features/project/store';
+import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
 
 @Options({
     components: { SettingIcon },
 })
 export default class CalendarCard extends mixins(UtilMixins) {
     @Prop({ required: true }) calendar!: ICalendar;
+
+    get canCreateCalendar() {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_CREATE_CALENDAR,
+        ]);
+    }
+
+    get canViewCalendar() {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_VIEW_CALENDER,
+        ]);
+    }
+
+    onClickCalendar() {
+        if (this.canViewCalendar) {
+            this.$router.push(`/project/calendar/${this.calendar._id}`);
+        }
+    }
 
     onClickEdit() {
         calendarModule.setSelectedCalendarId(this.calendar._id);

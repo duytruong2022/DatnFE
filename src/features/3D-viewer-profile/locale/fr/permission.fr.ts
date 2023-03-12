@@ -5,6 +5,9 @@ export default {
     '4DPLANNING_CREATE_ACTIVITY_CODE': 'Create activity code',
     '4DPLANNING_CREATE_RESOURCE': 'Create resource',
     GENERAL_CREATE_CALENDAR: 'Create calendar',
+    GENERAL_CREATE_DATE_TYPE: 'Create date type',
+    GENERAL_CREATE_PLANNING: 'Create planning',
+    GENERAL_CREATE_TASK: 'Create task',
     '4DPLANNING_CREATE_USER_DEFINED': 'Create user defined',
     GENERAL_CREATE_ABS_STRUCTURE: 'Create ABS structure',
     GENERAL_CREATE_PBS_STRUCTURE: 'Create PBS structure',
@@ -31,7 +34,7 @@ export default {
     '4DPLANNING_READ_USER_DEFINED_FIELD': 'Read user defined field',
     GENERAL_IMPORT_CSV: 'Import csv',
     GENERAL_LDAP_CONFIGURATION: 'Ldap configuration',
-    '4DPLANNING': '4D/Planning',
+    '4DPLANNING': 'Project',
     '4DPLANNING_READ_ONLY': 'Read only',
     '4DPLANNING_CREATE_APPEARANCE_PROFILE': 'Create appearance profile',
     '4DPLANNING_CREATE_3D_PATH': 'Create 3D path',
@@ -411,7 +414,7 @@ export default {
         'Add From Repository',
     '3D_WEBVIEWER_TABS_CUSTOM_FILE_GROUPS_CUSTOM_EXPORT_FUNCTIONS_EXPORT_FILE': 'Export',
     '3D_WEBVIEWER_TABS_CUSTOM_FILE_GROUPS_CUSTOM_EXPORT_FUNCTIONS_SAVE_FILE': 'Save',
-
+    //3D Broker
     '3D_WEBVIEWER_TABS_CUSTOM_FILE_GROUPS_3D_BROKER_FUNCTIONS_CREATE_4D_BOX':
         'Create 4D box',
     '3D_WEBVIEWER_TABS_CUSTOM_FILE_GROUPS_3D_BROKER_FUNCTIONS_CREATE_ZONE': 'Create Zone',

@@ -1,5 +1,5 @@
 <template>
-    <el-button @click="$emit('create')" type="primary" v-if="canCreateUserField">{{
+    <el-button @click="$emit('create')" type="primary">{{
         $t('planning.buttons.addField')
     }}</el-button>
     <BaseTableLayout
@@ -76,12 +76,6 @@ import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constan
 export default class TaskFieldList extends mixins(Planning4DMixin) {
     get fieldList(): IAdditionalTaskField[] {
         return projectPlanningModule.planning?.additionalTaskFields || [];
-    }
-
-    get canCreateUserField() {
-        return this.planningPermissions.includes(
-            ProjectSecurityPermissions['4DPLANNING_CREATE_USER_DEFINED'],
-        );
     }
 
     async deleteField(_id: string) {

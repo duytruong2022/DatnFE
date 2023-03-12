@@ -14,7 +14,7 @@
                 <span>{{ $t(`planning.gantt.columns.${key}`) }}</span>
                 <el-checkbox v-model="displayingStatus[key]"></el-checkbox>
             </div>
-            <el-divider>
+            <!-- <el-divider>
                 {{ $t('planning.buttons.userField') }}
             </el-divider>
             <div class="item-wrapper" v-for="item in additionTaskFields" :key="item._id">
@@ -23,7 +23,7 @@
                     :checked="additionalTaskFieldIdsDisplaying.includes(item._id)"
                     @change="(value) => onCheck(value, item)"
                 ></el-checkbox>
-            </div>
+            </div> -->
         </div>
         <template #footer>
             <span class="dialog-footer">

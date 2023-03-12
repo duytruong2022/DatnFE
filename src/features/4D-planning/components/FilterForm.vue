@@ -3,7 +3,7 @@
         @search="handleFilter"
         @reset="resetFilter"
         @keyup.enter="handleFilter"
-        :isShowCreateButton="canCreateGroup"
+        :isShowCreateButton="canCreatePlanning"
         @create="onClickButtonCreate"
     >
         <div class="row">
@@ -20,22 +20,22 @@
 
 <script lang="ts">
 import { ElLoading } from 'element-plus';
-import { hasPermissionToAccessRouteInConstellation } from '@/common/helpers';
-import { SecurityPermissions } from '@/features/security-profile/constants';
+import { hasPermissionToAccessRouteInProject } from '@/common/helpers';
 import { initPlanQueryString, projectPlanningModule } from '../store';
 import { IPlanListQueryString } from '../interfaces';
 import { projectModule } from '@/features/project/store';
 import { mixins } from 'vue-class-component';
 import { UtilMixins } from '@/mixins/utilMixins';
+import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
 
 export default class FilterForm extends mixins(UtilMixins) {
     filterForm = {
         keyword: '',
     };
 
-    get canCreateGroup(): boolean {
-        return hasPermissionToAccessRouteInConstellation([
-            SecurityPermissions.MANAGE_USERS_GROUPS,
+    get canCreatePlanning(): boolean {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_CREATE_PLANNING,
         ]);
     }
 

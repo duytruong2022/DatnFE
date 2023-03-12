@@ -22,8 +22,6 @@ import { projectNotification as projectNotificationEn } from '@/features/project
 import planningEn from '@/features/4D-planning/locale/en/planning.en';
 import { projectGroup as projectGroupEn } from '@/features/project-group/locale/en/project-group.en';
 import viewer3dProfileEn from '@/features/3D-viewer-profile/locale/en/index.en';
-import { pbsGroup as pbsGroupEn } from '@/features/pbs-group/locale/en/pbsGroup.en';
-import absEn from '@/features/abs/locale/en/index.en';
 import { ldapConfigForm as ldapConfigFormEn } from '@/features/user/locale/en/ldapConfigForm.en';
 import { supportRequest as supportRequestEn } from '@/features/support-request/locale/en/supportRequest.en';
 import { projectLog as projectLogEn } from '@/features/project-log/locale/en/projectLog.en';
@@ -53,9 +51,7 @@ import { changePasswordForm as changePasswordFormFr } from '@/features/auth/loca
 import { projectList as projectListFr } from '@/features/project/locale/fr/projectList.fr';
 import { projectNotification as projectNotificationFr } from '@/features/project/locale/fr/projectNotification.fr';
 import planningFr from '@/features/4D-planning/locale/fr/planning.fr';
-import { pbsGroup as pbsGroupFr } from '@/features/pbs-group/locale/fr/pbsGroup.fr';
 import viewer3dProfileFr from '@/features/3D-viewer-profile/locale/fr/index.fr';
-import absFr from '@/features/abs/locale/fr/index.fr';
 import { projectGroup as projectGroupFr } from '@/features/project-group/locale/fr/project-group.fr';
 import { ldapConfigForm as ldapConfigFormFr } from '@/features/user/locale/fr/ldapConfigForm.fr';
 import { supportRequest as supportRequestFr } from '@/features/support-request/locale/fr/supportRequest.fr';
@@ -89,8 +85,6 @@ const messages = {
         planning: planningEn,
         projectGroup: projectGroupEn,
         ['3dViewerProfile']: viewer3dProfileEn,
-        pbsGroup: pbsGroupEn,
-        abs: absEn,
         ldapConfigForm: ldapConfigFormEn,
         supportRequest: supportRequestEn,
         repository: repositoryEn,
@@ -123,8 +117,6 @@ const messages = {
         planning: planningFr,
         projectGroup: projectGroupFr,
         ['3dViewerProfile']: viewer3dProfileFr,
-        pbsGroup: pbsGroupFr,
-        abs: absFr,
         ldapConfigForm: ldapConfigFormFr,
         supportRequest: supportRequestFr,
         repository: repositoryFr,

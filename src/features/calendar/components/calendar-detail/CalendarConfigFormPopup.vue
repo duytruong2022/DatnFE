@@ -29,7 +29,7 @@
                     @clear="form.setFieldValue('workingDayTypeId', null)"
                     v-if="isShowWorkingDayTypeIdSelect"
                 />
-                <el-button-group>
+                <el-button-group v-if="canCreateDayType">
                     <el-button @click="onClickAddDayType">
                         {{ $t('calendar.config.popup.form.button.add') }}
                     </el-button>
@@ -71,10 +71,12 @@ import { setupCalendarConfigForm } from '../../compositions/calendarConfigForm';
 import { UtilMixins } from '@/mixins/utilMixins';
 import { projectModule } from '@/features/project/store';
 import {
+    hasPermissionToAccessRouteInProject,
     showConfirmPopUpFunction,
     showSuccessNotificationFunction,
 } from '@/common/helpers';
 import { dayTypeService } from '../../services/day-type.service';
+import { ProjectSecurityPermissions } from '@/features/3D-viewer-profile/constants';
 
 @Options({
     components: { DownloadIcon },
@@ -127,6 +129,12 @@ export default class CalendarConfigFormPopup extends mixins(UtilMixins) {
             }),
             value: option.value,
         }));
+    }
+
+    get canCreateDayType() {
+        return hasPermissionToAccessRouteInProject([
+            ProjectSecurityPermissions.GENERAL_CREATE_CALENDAR,
+        ]);
     }
 
     async onSubmit(): Promise<void> {
