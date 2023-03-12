@@ -155,12 +155,7 @@
                 </div>
             </slot>
             <template #custom-button>
-                <el-button
-                    size="mini"
-                    class="import-button"
-                    @click="onClickButtonUpload"
-                    v-if="canImportCSV"
-                >
+                <el-button size="mini" class="import-button" @click="onClickButtonUpload">
                     {{ $t('common.importFiles.import') }}
                 </el-button>
                 <el-button
