@@ -22,7 +22,7 @@
                 </el-button>
             </div>
             <div class="row">
-                <div :class="form.isCreate ? 'col-md-6' : 'col-md-12'">
+                <div class="col-md-6">
                     <BaseInputText
                         v-model:value="form.email"
                         :label="$t('userForm.title.email')"
@@ -30,13 +30,6 @@
                         :error="translateYupError(form.errors.email)"
                         :is-disabled="!form.isCreate"
                         :is-required="true"
-                    />
-                </div>
-                <div class="col-md-6" v-if="!form.isCreate">
-                    <BaseInputText
-                        v-model:value="form.ldapUsername"
-                        :label="$t('userForm.title.ldapUsername')"
-                        :is-disabled="!form.isCreate"
                     />
                 </div>
                 <div class="col-md-6">

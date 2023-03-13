@@ -60,23 +60,6 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    :label="$t('user.userList.projectProfileByPbs')"
-                    min-width="200"
-                    v-if="selectedProjectId"
-                >
-                    <template #default="scope">
-                        <ul
-                            v-for="pbsProfile in scope.row.pbsProfile"
-                            :key="pbsProfile"
-                            class="profiles"
-                        >
-                            <li>
-                                {{ pbsProfile?.name }}
-                            </li>
-                        </ul>
-                    </template>
-                </el-table-column>
-                <el-table-column
                     :label="$t('user.userList.accessProjectHeader')"
                     width="250"
                     v-if="!selectedProjectId"
